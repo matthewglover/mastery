@@ -4,14 +4,14 @@ import Backend
 import Debug
 import Header
 import Healthcheck.Healthcheck as Healthcheck
-import Html
+import Html exposing (Html)
 import LandingPage.LandingPage as LandingPage
 import LandingPage.State exposing (Model)
 import LoginPage.LoginPage as LoginPage exposing (..)
 import Messages exposing (Auth(..), Msg(..))
 import Navigation exposing (..)
-import PathView exposing (view)
-import PersonalPath
+import View.PersonalPath exposing (view)
+import Data.PersonalPath
 import Routing exposing (Route(..), pageToUrl, parseLocation)
 
 
@@ -27,8 +27,9 @@ type alias AppModel =
     , landing : LandingPage.State.Model
     , healthcheck : Healthcheck.Model
     , login : Auth
-    , path : Maybe PersonalPath.Path
+    , path : Maybe Data.PersonalPath.Path
     , config : Config
+    , personalPath: Data.PersonalPath.PersonalPath
     }
 
 
@@ -44,6 +45,7 @@ init config location =
       , login = Unauthenticated
       , path = Nothing
       , config = config
+      , personalPath = Data.PersonalPath.initialState
       }
     , Cmd.batch [ Backend.loadLessons config.baseUrl, Backend.checkAuth config.baseUrl ]
     )
@@ -76,32 +78,21 @@ update msg model =
             )
 
 
-page : AppModel -> Html.Html Msg
-page model =
-    let
-        framed =
-            frame model.login
-    in
-    case model.route of
-        LandingPage ->
-            framed <| LandingPage.view model.landing
-
-        Healthcheck ->
-            framed <| Healthcheck.view model.healthcheck
-
-        Login ->
-            framed <| LoginPage.view model.login
-
-        NotFound ->
-            framed <| Html.text "Not found :("
-
-        PersonalPath ->
-            framed <| PathView.view model.path
+pageView : AppModel -> Html Msg
+pageView model =
+  case model.route of
+    LandingPage -> LandingPage.view model.landing
+    Login -> LoginPage.view model.login
+    PersonalPath -> View.PersonalPath.view model.path
+    Healthcheck -> Healthcheck.view model.healthcheck
+    NotFound -> Html.text "Not found :("
 
 
-frame : Auth -> Html.Html Msg -> Html.Html Msg
-frame auth html =
-    Html.div [] [ Header.view auth, html ]
+view : AppModel -> Html Msg
+view model =
+  Html.div [] [ Header.view model.login
+              , pageView model
+              ]
 
 
 main : Program Config AppModel Msg
@@ -109,7 +100,7 @@ main =
     Navigation.programWithFlags
         ChangeLocation
         { init = init
-        , view = page
+        , view = view
         , update = update
         , subscriptions = \model -> Sub.none
         }

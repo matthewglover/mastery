@@ -1,0 +1,4 @@
+{
+	"assets/elm/src/*.elm": { "alternate": "assets/elm/tests/{}Test.elm" },
+	"assets/elm/tests/*Tests.elm": { "alternate": "assets/elm/src/{}.elm" }
+}

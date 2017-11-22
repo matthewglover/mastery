@@ -8,7 +8,6 @@ import LandingPage.State exposing (DetailsOptions(..))
 import Lesson exposing (Lesson)
 import Messages exposing (..)
 
-
 view : List Lesson -> Html Messages.Msg
 view lessons =
     case lessons of

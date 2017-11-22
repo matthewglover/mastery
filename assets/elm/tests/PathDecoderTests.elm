@@ -4,7 +4,7 @@ import Expect exposing (Expectation)
 import Json.Decode as Decode
 import Language exposing (Language)
 import Lesson
-import PersonalPath
+import Data.PersonalPath
 import Test exposing (..)
 
 
@@ -24,7 +24,7 @@ suite =
                         """
 
                     output =
-                        Decode.decodeString PersonalPath.decode json
+                        Decode.decodeString Data.PersonalPath.decode json
                 in
                 Expect.equal output
                     (Ok
@@ -35,7 +35,7 @@ suite =
                     )
         ]
 
-
+lesson : Lesson.Lesson
 lesson =
     { id = Lesson.Id 1
     , title = "Elixir Guilded Rose"

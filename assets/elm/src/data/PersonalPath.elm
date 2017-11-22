@@ -1,8 +1,46 @@
-module PersonalPath exposing (..)
+module Data.PersonalPath exposing (..)
 
 import Json.Decode as Decode
 import Json.Encode as Encode exposing (..)
 import Lesson exposing (..)
+
+type Msg = AddLesson Lesson.Lesson 
+
+
+type LessonStatus =
+  Backlog | InProgress | Done
+
+
+type alias PersonalLesson =
+  { lesson : Lesson.Lesson,
+    status : LessonStatus
+  }
+
+type alias PersonalPath = List PersonalLesson
+
+
+initialState : PersonalPath
+initialState = []
+
+
+update : PersonalPath -> Msg -> PersonalPath
+update personalPath msg =
+  case msg of
+    AddLesson lesson ->
+      if personalPathHasLesson personalPath lesson then
+        personalPath
+      else
+        personalPath ++ [PersonalLesson lesson Backlog]
+
+
+personalPathHasLesson : PersonalPath -> Lesson.Lesson -> Bool
+personalPathHasLesson  personalPath lesson =
+    List.any (personalLessonHasLesson lesson) personalPath
+
+
+personalLessonHasLesson  : Lesson.Lesson -> PersonalLesson -> Bool
+personalLessonHasLesson lesson personalLesson =
+    personalLesson.lesson == lesson
 
 
 type alias Path =

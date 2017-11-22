@@ -2,7 +2,7 @@ module Messages exposing (..)
 
 import LandingPage.State exposing (Msg)
 import Navigation exposing (Location)
-import PersonalPath exposing (Path)
+import Data.PersonalPath exposing (Path)
 import Routing exposing (Route(..))
 
 

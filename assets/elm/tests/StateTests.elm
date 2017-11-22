@@ -4,7 +4,7 @@ import Expect exposing (Expectation)
 import LandingPage.State as State
 import Language exposing (Language(..))
 import Lesson exposing (..)
-import PersonalPath exposing (..)
+import Data.PersonalPath
 import Test exposing (..)
 
 
@@ -21,18 +21,19 @@ suite =
             sampleLesson 2 "bar"
     in
     describe "Progression of states through the app"
-        [ test "select a lesson for the path to mastey" <|
+        [ test "select a lesson for the path to mastery" <|
             \_ ->
                 let
-                    nextModel =
-                        State.select lesson1 initialModel
+                  nextModel =
+                    State.select lesson1 initialModel
                 in
-                Expect.equal nextModel.path.todo [ lesson1 ]
+                  Expect.equal nextModel.path.todo [ lesson1 ]
+
         , test "remove a previously selected lesson" <|
             \_ ->
                 let
                     path =
-                        PersonalPath.empty
+                        Data.PersonalPath.empty
 
                     model =
                         { initialModel | path = { path | todo = [ lesson1, lesson2 ] } }

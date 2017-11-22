@@ -1,4 +1,4 @@
-module LessonsTests exposing (..)
+module LessonTests exposing (..)
 
 import Expect exposing (Expectation)
 import Json.Decode as Decode
@@ -42,7 +42,7 @@ suite =
                         , readingMaterial = []
                         }
                     )
-        , test "defaults to empty list when reading not presetn" <|
+        , test "defaults to empty list when reading not present" <|
             \_ ->
                 let
                     json =

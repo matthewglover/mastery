@@ -1,11 +1,12 @@
-module PathView exposing (view)
+module View.PersonalPath exposing (view)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Language exposing (Language(..))
 import Lesson exposing (..)
-import PersonalPath exposing (Path)
+import Data.PersonalPath exposing (Path)
 import SmallCard exposing (State(..), view)
+import Debug
 
 
 view : Maybe Path -> Html.Html a
@@ -18,6 +19,8 @@ view maybe_model =
 viewPath : Path -> Html.Html a
 viewPath { done, current, todo } =
     let
+        _ = Debug.log "todos------>" todo
+
         todos =
             todoHtml todo
 
@@ -31,8 +34,9 @@ viewPath { done, current, todo } =
     in
     Html.div [ class "module centered" ]
         [ todos
-        , current_task
-        , completed
+        -- , current_task
+        -- , completed
+        , Html.div [] [text "boom"]
         ]
 
 
@@ -67,7 +71,7 @@ viewLesson lesson =
 
 
 
--- dupplicated
+-- duplicated
 
 
 border : Language -> List ( String, String )

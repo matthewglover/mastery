@@ -2,7 +2,7 @@ module LandingPage.State exposing (..)
 
 import Lesson exposing (Lesson, LessonId)
 import List.Extra
-import PersonalPath exposing (..)
+import Data.PersonalPath exposing (..)
 import Search exposing (..)
 
 
@@ -37,7 +37,7 @@ type Msg
 initial : Model
 initial =
     { lessons = []
-    , path = PersonalPath.empty
+    , path = Data.PersonalPath.empty
     , modal = Nothing
     , search = Search.init
     }
@@ -74,7 +74,7 @@ remove : LessonId -> Model -> Model
 remove id model =
     let
         new_path =
-            PersonalPath.remove id model.path
+            Data.PersonalPath.remove id model.path
     in
     { model | path = new_path }
 
@@ -83,7 +83,7 @@ select : Lesson -> Model -> Model
 select lesson model =
     let
         new_path =
-            PersonalPath.select lesson model.path
+            Data.PersonalPath.select lesson model.path
     in
     { model | path = new_path }
 

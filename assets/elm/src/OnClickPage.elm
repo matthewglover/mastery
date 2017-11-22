@@ -17,8 +17,8 @@ onPreventDefaultClick message =
 
 
 onClickPage : Route -> List (Attribute Msg)
-onClickPage page =
+onClickPage route =
     [ style [ ( "pointer", "cursor" ) ]
-    , href (pageToUrl page)
-    , onPreventDefaultClick (ChangeRoute page)
+    , href (pageToUrl route)
+    , onPreventDefaultClick (ChangeRoute route)
     ]

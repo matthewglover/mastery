@@ -6,7 +6,7 @@ import Json.Decode as Decode
 import LandingPage.State
 import Lesson exposing (..)
 import Messages exposing (Auth(..), Msg(..))
-import PersonalPath exposing (Path)
+import Data.PersonalPath exposing (Path)
 
 
 savePath : String -> Path -> Cmd Msg
@@ -17,8 +17,8 @@ savePath url path =
                 { method = "POST"
                 , headers = []
                 , url = url ++ "/api/path"
-                , body = Http.jsonBody (PersonalPath.encode path)
-                , expect = Http.expectJson PersonalPath.decode
+                , body = Http.jsonBody (Data.PersonalPath.encode path)
+                , expect = Http.expectJson Data.PersonalPath.decode
                 , timeout = Nothing
                 , withCredentials = True
                 }
@@ -54,7 +54,7 @@ loadPath url =
                 |> LoadPath
 
         request =
-            Http.get (url ++ "/api/path") PersonalPath.decode
+            Http.get (url ++ "/api/path") Data.PersonalPath.decode
     in
     Http.send mapping request
 
